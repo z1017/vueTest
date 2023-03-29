@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+
+    </style>
+</head>
+
+<body>
+    <h2>sessionStorage</h2>
+    <button onclick="saveDate()">点我保存一个数据</button>
+    <hr>
+    <button onclick="getDate()">点我读取一个数据</button>
+    <hr>
+    <button onclick="deleteDate()">点我删除一个数据</button>
+    <hr>
+    <button onclick="clearDate()">点我清空数据</button>
+    <hr>
+
+    <script>
+        let p = { name: '张三', age: 18 }
+        function saveDate() {
+            sessionStorage.setItem('msg', 'hello!!')
+            sessionStorage.setItem('msg2', 888)
+            sessionStorage.setItem('person', JSON.stringify(p))
+        }
+
+        function getDate() {
+            console.log(sessionStorage.getItem('msg2'));
+            console.log(sessionStorage.getItem('msg'));
+            const result = sessionStorage.getItem('person')
+            // JSON.parse()方法将 JSON 格式字符串转换为 js对象(属性名没有双引号)
+            console.log(JSON.parse(result));
+        }
+
+        function deleteDate() {
+            sessionStorage.removeItem('msg')
+        }
+
+        function clearDate(){
+            sessionStorage.clear()
+        }
+    </script>
+</body>
+
+</html>

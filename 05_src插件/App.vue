@@ -1,6 +1,5 @@
 <template>
-  <div class="app">
-    <h1>{{ msg }}</h1>
+  <div>
     <Student />
     <hr />
     <School />
@@ -14,16 +13,6 @@ import School from "./components/School.vue";
 export default {
   name: "App",
   components: { Student, School },
-  data() {
-    return {
-      msg: "hello",
-    };
-  },
 };
 </script>
-<style scoped>
-.app{
-  background-color: gainsboro;
-  padding: 5px;
-}
-</style>
+
