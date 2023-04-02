@@ -1,149 +1,15 @@
 <template>
-  <div id="root">
-    <div class="todo-container">
-      <div class="todo-wrap">
-        <!-- 给 myheader 组件添加自定义事件：addTodo,事件回调：addTodo -->
-        <MyHeader @addTodo="addTodo" />
-        <List :todos="todos" />
-        <MyFooter
-          :todos="todos"
-          @checkAllTodo="checkAllTodo"
-          @clearAllTodo="clearAllTodo"
-        />
-      </div>
-    </div>
+  <div class="container">
+    <Search />
+    <List />
   </div>
 </template>
 
 <script>
-import MyFooter from "./components/MyFooter.vue";
-import MyHeader from "./components/MyHeader.vue";
+import Search from "./components/Search.vue";
 import List from "./components/List.vue";
-import 'animate.css'
-
 export default {
   name: "App",
-  components: { MyFooter, MyHeader, List },
-  data() {
-    //  由于 todos 是 MyHeader 组件和 MyFooter 组件都在使用，所以放在 App 中（状态提升）
-    return {
-      todos: JSON.parse(localStorage.getItem("todos")) || [],
-    };
-  },
-  methods: {
-    // 添加一个 todo
-    addTodo(todoObj) {
-      this.todos.unshift(todoObj);
-    },
-
-    // 勾选or取消勾选一个 todo
-    checkTodo(id) {
-      this.todos.forEach((todo) => {
-        if (todo.id === id) todo.done = !todo.done;
-      });
-    },
-    // 删除一个 todo
-    deleteTodo(id) {
-      this.todos = this.todos.filter((todo) => {
-        return todo.id !== id;
-      });
-    },
-    // 全选or取消全选
-    checkAllTodo(done) {
-      this.todos.forEach((todo) => {
-        todo.done = done;
-      });
-    },
-
-    // 清除所有已完成
-    clearAllTodo() {
-      this.todos = this.todos.filter((todo) => {
-        return !todo.done;
-      });
-    },
-    // 更新一个 todo
-    updateTodo(id, title) {
-      this.todos.forEach((todo) => {
-        if (todo.id === id) todo.title = title;
-      });
-    },
-  },
-  watch: {
-    todos: {
-      deep: true,
-      handler(value) {
-        localStorage.setItem("todos", JSON.stringify(value));
-      },
-    },
-  },
-  // 一挂载就绑定
-  mounted() {
-    this.$bus.$on("checkTodo", this.checkTodo);
-    this.$bus.$on("deleteTodo", this.deleteTodo);
-    this.$bus.$on("updateTodo", this.updateTodo);
-  },
-  // 在组件即将销毁的时候解绑
-  beforeDestroy() {
-    this.$bus.$off("checkTodo");
-    this.$bus.$off("deleteTodo");
-    this.$bus.$off("updateTodo");
-  },
+  components: { Search, List },
 };
 </script>
-
-<style>
-/*base*/
-body {
-  background: #fff;
-}
-
-.btn {
-  display: inline-block;
-  padding: 4px 12px;
-  margin-bottom: 0;
-  font-size: 14px;
-  line-height: 20px;
-  text-align: center;
-  vertical-align: middle;
-  cursor: pointer;
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2),
-    0 1px 2px rgba(0, 0, 0, 0.05);
-  border-radius: 4px;
-}
-
-.btn-danger {
-  color: #fff;
-  background-color: #da4f49;
-  border: 1px solid #bd362f;
-}
-
-.btn-danger:hover {
-  color: #fff;
-  background-color: #bd362f;
-}
-
-.btn-edit {
-  color: #fff;
-  background-color: #1da61d;
-  border: 1px solid #0d9426;
-}
-
-.btn-edit:hover {
-  color: #fff;
-  background-color: #0d9426;
-}
-
-.btn:focus {
-  outline: none;
-}
-
-.todo-container {
-  width: 600px;
-  margin: 0 auto;
-}
-.todo-container .todo-wrap {
-  padding: 10px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-}
-</style>
