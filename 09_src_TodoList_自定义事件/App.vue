@@ -4,7 +4,7 @@
       <div class="todo-wrap">
         <!-- 给 myheader 组件添加自定义事件：addTodo,事件回调：addTodo -->
         <MyHeader @addTodo="addTodo" />
-        <List :todos="todos" />
+        <List :todos="todos" :checkTodo="checkTodo" :deleteTodo="deleteTodo" />
         <MyFooter
           :todos="todos"
           @checkAllTodo="checkAllTodo"
@@ -19,7 +19,6 @@
 import MyFooter from "./components/MyFooter.vue";
 import MyHeader from "./components/MyHeader.vue";
 import List from "./components/List.vue";
-import 'animate.css'
 
 export default {
   name: "App",
@@ -61,12 +60,6 @@ export default {
         return !todo.done;
       });
     },
-    // 更新一个 todo
-    updateTodo(id, title) {
-      this.todos.forEach((todo) => {
-        if (todo.id === id) todo.title = title;
-      });
-    },
   },
   watch: {
     todos: {
@@ -75,18 +68,6 @@ export default {
         localStorage.setItem("todos", JSON.stringify(value));
       },
     },
-  },
-  // 一挂载就绑定
-  mounted() {
-    this.$bus.$on("checkTodo", this.checkTodo);
-    this.$bus.$on("deleteTodo", this.deleteTodo);
-    this.$bus.$on("updateTodo", this.updateTodo);
-  },
-  // 在组件即将销毁的时候解绑
-  beforeDestroy() {
-    this.$bus.$off("checkTodo");
-    this.$bus.$off("deleteTodo");
-    this.$bus.$off("updateTodo");
   },
 };
 </script>
@@ -120,17 +101,6 @@ body {
 .btn-danger:hover {
   color: #fff;
   background-color: #bd362f;
-}
-
-.btn-edit {
-  color: #fff;
-  background-color: #1da61d;
-  border: 1px solid #0d9426;
-}
-
-.btn-edit:hover {
-  color: #fff;
-  background-color: #0d9426;
 }
 
 .btn:focus {

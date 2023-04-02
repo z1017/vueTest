@@ -19,7 +19,6 @@
 import MyFooter from "./components/MyFooter.vue";
 import MyHeader from "./components/MyHeader.vue";
 import List from "./components/List.vue";
-import 'animate.css'
 
 export default {
   name: "App",
