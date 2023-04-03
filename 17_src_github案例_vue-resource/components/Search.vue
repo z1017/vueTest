@@ -14,7 +14,6 @@
 </template>
 
 <script>
-import axios from "axios";
 export default {
   // eslint-disable-next-line vue/multi-word-component-names
   name: "Search",
@@ -32,7 +31,7 @@ export default {
         errMsg: "",
         users: [],
       });
-      axios.get(`https://api.github.com/search/users?q=${this.keyWord}`).then(
+      this.$http.get(`https://api.github.com/search/users?q=${this.keyWord}`).then(
         (response) => {
           console.log("请求成功了");
           // 请求成功后更新 List 的数据
