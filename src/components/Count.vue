@@ -28,16 +28,17 @@ export default {
     };
   },
   computed: {
-    ...mapState(["sum", "name", "school",'personList']),
-    ...mapGetters(["bigSum"]),
+    ...mapState('countAbout',["sum", "name", "school"]),
+    ...mapState('personAbout',['personList']),
+    ...mapGetters('countAbout',["bigSum"]),
   },
   methods: {
   
     // 借助mapMutations 生成对应的方法，方法中会调用 commit 去联系 mutations (对象写法)
-    ...mapMutations({ increment: "JIA", decrement: "JIAN" }),
+    ...mapMutations('countAbout',{ increment: "JIA", decrement: "JIAN" }),
 
     // 借助mapActions 生成对应的方法，方法中会调用 dispath 去联系 actions (对象写法)
-    ...mapActions({incrementOdd:'jiaOdd',incrementWait:'jiaWait'})
+    ...mapActions('countAbout',{incrementOdd:'jiaOdd',incrementWait:'jiaWait'})
   },
 };
 </script>
